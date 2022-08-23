@@ -1,0 +1,3 @@
+how to connect data base to microservices
+how to install packages which are not in the repository
+instance type

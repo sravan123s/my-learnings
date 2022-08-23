@@ -1,0 +1,40 @@
+I have completed my graduation in 2018 since then iam working as a associate Devops Engineeer with quantum technologies
+I have lump sum knoledge in different tools like 
+ vension control tool like gitHub, gitlab
+ infractute as a code tool like terraformm
+ continuous interation tool like jenkins and gitlab
+ monitaring and visuvalization tools like grafana
+ loging tools like ES   
+ containerization and orchestration tools like docker and kubernetes
+
+Comming to my roles and responsiblities
+ I have a hands on experince on managing repositories in gitHub,
+ managing jenkins plugins,creating master slave configuration,
+ managing build jobs and interation jenkins with tools like git kubernetes and git
+ writing docker file, creation docker custom images 
+ on top of that
+we are having our cloud , we host all our infrastructure in the cloud  where i will     
+manage and configure things in aws apart from that we are handlimg different application nodejs and
+java i design the pipeline in jenkins, if any issue comes i will piching and solving the thins
+apart from this things we are running all this things on ubernetes where i will design CI and CD 
+for them if some issue comes in the deployment and other things i will look into that
+ 
+Thats all about my self, Thankyou.
+
+company address
+ Plot no 264, Level 3, Kavuri Hills Phase 2 Rd, Madhapur, hyd,  Telangana 500081
+
+WHY ARE YOU LOOKING FOR JOB CHANGE?
+I’ve a fantastic time working at quantum technologies over the last 3 years, I learnt a lot from there apart from what iam doing
+I’m now looking to utilise the skills I’ve learnt, leaving my current job and taking on a new challenge. I believe that this role is the perfect for my cerrier grouth
+
+my company mailid
+sravan.s@quantum-tech.co
+
+in vm to create it will take min time of 2min,hyperviser
+ transfer, small files, container engine, 
+ g.raja@tcs.com
+ 
+Devops
+ Mainly devops is a plan develop deliver and 
+ operate

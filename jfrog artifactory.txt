@@ -1,0 +1,7 @@
+USE CASES
+ Binary repository manager, The place where you can store all your artifacts, Proxy for remote repos, Dependency manager works against it, 
+ The place where we can store docker images, Artifactory integration, Faster release, Business continuity, Orchestration tools, Storage ready
+REST API
+ representation state transfer application programming interface
+ When the request hit is going to the server from clint the responce will be in the form fo json or xml
+  In rest API s there will be CURD operations which means create, read , update, delete

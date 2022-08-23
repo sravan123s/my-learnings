@@ -1,0 +1,28 @@
+BASIC THINGS IN GUI
+dashboard==>general--> descreption,tags,folder
+            annotations
+			variables
+			links
+			json model
+panel=> in what way we can see the data like graph, table, guage, logs like that
+alerting==>we have alerting rules and  adding channels
+configuration==>datasource--> it will alowes u to choose different databases, grafana required any one db
+                users--> we can add users who will control grafana
+				teams-->if we want to work with perticulat team we can use teams
+				plugins--> it has n number of plugins 
+				preferences--> we can give organizatin name and we can give theames
+				API kyes
+server admin==>users
+               orgs--> about organizatin
+			   settings--> sytem settings
+			   stats-->ststics of user, admin, viewers 
+			   
+STEPS TO CONFIGURE GRAFANA
+ From Prometheus.io we need to download exporter, install node exporter on linux box, 
+ now lets create two server one for prometheus and other for grafana, install prometheus in 
+ prometheus server, then we need to update prometheus.yml file keep node exporter server IP 
+ and port in that, In promitius lets check in targets we will find both node exporter and promitius servers, 
+ Now install grafana in grafana server after installation we need to add data source our data source is prometheus, 
+ configure promitiusthere we have to add url and ip address, we can import the required dashboard here 
+ we will import node exporter dashboard after saving the dashboard will appear with cpu,memory usage and load average and other things 			   
+  

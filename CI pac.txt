@@ -1,0 +1,80 @@
+//declarative//
+pipeline {
+ agent any
+ 
+ stages {
+   stage('GitClone') {
+    steps {
+     script {
+      String payload = "${payload}"
+      jsonObject = readJSON text: payload
+      gitHash = "${jsonObject.pull_request.head.sha}"
+      String gitUrl = "${jsonObject.repository.clone_url}"
+      checkout([$class: 'GitSCM', branches: [[name: "${gitHash}"]], 
+      doGenerateSubmoduleConfigurations: false, extensions: [], submoduleCfg: [], 
+      userRemoteConfigs: [[credentialsId: 'gitaccess', url: "${gitUrl}"]]])
+	  
+             }
+           }
+        }
+   stage('Get Dependencies') {
+
+    steps {
+     script {
+      sh """
+      npm install
+      """
+            }
+          } 
+       }
+ stage('Unit Test') {
+ steps {
+ script {
+ sh """
+ npm test
+ """
+ }
+ }
+ }
+ stage('CodeQuality') {
+ steps {
+ script {
+ withSonarQubeEnv(credentialsId: 'Jenkins-Sonar-Token') {
+ sh """
+ sonar-scanner \
+ -Dsonar.projectKey="nodejs-cicd" \
+ -Dsonar.sources="." \
+ -Dsonar.host.url="http://3.131.37.41" \
+ -Dsonar.branch.target="master"
+ """
+ }
+ }
+ }
+ }
+ stage("Quality Gate") {
+ options {
+ timeout(time: 10, unit: 'MINUTES')
+ }
+ steps {
+ sleep(30) 
+Quality Gate fails
+ waitForQualityGate abortPipeline: true
+ }
+ }
+ }
+ }
+
+
+// Script //
+node {
+ stage('Build') {
+ sh 'make'
+ }
+ stage('Test') {
+ sh 'make check'
+ junit 'reports/**/*.xml'
+ }
+ stage('Deploy') {
+ sh 'make publish'
+ }
+}

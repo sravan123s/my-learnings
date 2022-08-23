@@ -1,0 +1,19 @@
+WHAT IS MONGODB?
+Mongodb is a no sql database, collection of data is not relational to each other it is based on binary JSON simple quary language
+after creating we will enter into the application of mongodb it is user friendly application at srarting there will be dashboard and performance
+
+SOME COMMANDS
+use <data base name> ==> to create database
+db ==> present you are in which data base
+db.dropdatabase ==> to delete the data base
+db.createCollection('name') ==> to create collection
+db.collection name.insertMany ==> to insert documents
+db.collection.find(name)==> to find data
+show dbs ==> to show homany databases present
+show collections ==> to show how many collections present
+ 
+COLLECTIONS IN MONGODB?
+In SQL we call collections as tables, in mongodb collection is in json formate, collection contain differeny types of documents
+in collection we can add data  
+
+CRUD OPERATIONS (CREATE,READ,UPDATE,DELETE)

@@ -1,0 +1,148 @@
+ANY OPTIMISATIONS DONE ON DEOCKER
+   Don't install unnecessary packages. ...
+   Sort multi-line arguments. ...
+   Decouple applications. ...
+   Minimize the number of layers. ...
+   Leverage build cache.
+   
+HOW TO REDUCE THE DOCKER IMAGE SIZE
+To reduce the size we need to give minamal commands first and if there is 2 or more  referances 
+like RUN,ENV,ARG,CMD,ADD,COPY,ENTRYPOINT keep then as one command by using &&
+
+ARG: ARG instruction is used to define a variable can be used to build a docker image, ARg values are not 
+available after the image is build, in the running containers we can not access the arg variable
+docker build --build-arg <argument> -t <tag name> . 
+ENV: It is use to give values to the containers, we can not change the env variables in the command line arguments, 
+if we want to change ENV variables in the CMD line then we have to use ARG variables place Arg variables in the place of ENV variables  
+
+HOW DO WE TAKE BACKUP OF THE SERVER?
+1.create a docker container
+2.Get the container ID
+3.Commit the docker container to take snap shot
+4.Saving backup as a tar file
+5.Pushing image to the docker hub
+
+DOCKER NETWORKING?
+    In Docker Networking after creating the docker server by installing docker software there will be a default docker0 port 
+    it will manage the ip address of the containers, if we want we can create custom network the command is docker network create 
+    we can create then after all the ips of the containers you create is from custom network range 
+    there are 2 types of networking
+    1. Bri
+	+-dge networks==> It is used to set communication between containers in single host
+    2. overlay networks==> It is used to conmmunicate between multi hosts
+    3. macvlan networks==> This asign the MAC address to the docker container with the MAC address the docker server will route the network traffic to the router
+                           It is sutable when the user wants to connect the container directly to the physical network insted of using the docker host
+DOCKER FILE
+Docker file is ablue print to create docker images
+FROM:To take base image
+RUN: to execute any linux command inside of the container RUN is used 
+ENV: we can give env varibles like user name and password or path
+ex:
+FROM node:13-alpine
+ENV MONGO_DB_USERNAME=admin \
+    MONGO_DB_PWD=password
+RUN mkdir -p /home/application
+COPY . /home/app
+CMD ["node", "server.js"]
+TO BUILD COMMAND IS: docker build -t my-app:1.0 .
+we have to push images to docker privaste registory we are using ECR(elastic container registory) as private registory to create ECR we need to hit view push command
+and we need to install aws cli in cli after that ECR will give the image with tag it will make one more copy and renamed, in ECR we have one repo for one image name 
+but we can have different versions
+
+Dockerfile:
+FROM centos:7
+# Installing Java
+ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0-openjdk
+ENV PATH=$PATH:$JAVA_HOME
+RUN yum install java-1.8.0-openjdk-devel wget -y
+EXPOSE 8080
+
+# Installing Maven
+ENV Mvn_Version=3.6.3 
+ENV M2_HOME=/usr/local/apache-maven/apache-maven-${Mvn_Version}
+ENV M2="${M2_HOME}/bin"
+ENV PATH=$PATH:$M2
+ 
+RUN wget https://downloads.apache.org/maven/maven3/${Mvn_Version}/binaries/apache-maven-${Mvn_Version}-bin.tar.gz && \
+ tar xvfz apache-maven-${Mvn_Version}-bin.tar.gz && \
+ mkdir /usr/local/apache-maven/apache-maven-${Mvn_Version} -p && \
+ mv apache-maven-${Mvn_Version}/* /usr/local/apache-maven/apache-maven-
+${Mvn_Version}/
+
+# Installing and configuring Tomcat
+ENV Tomcat_Version=8.5.54
+RUN wget http://www-eu.apache.org/dist/tomcat/tomcat8/v${Tomcat_Version}/bin/apache-tomcat-${Tomcat_Version}.tar.gz && \
+tar xvfz apache-tomcat-${Tomcat_Version}.tar.gz && \
+ mkdir -p /opt/tomcat/ /opt/myapplication/ -p && \
+mv apache-tomcat-${Tomcat_Version}.tar.gz /tmp/ && \
+mv apache-tomcat-${Tomcat_Version}/* /opt/tomcat/. 
+COPY context.xml /opt/tomcat/webapps/manager/META-INF/ 
+COPY tomcat-users.xml /opt/tomcat/conf/
+CMD ["/opt/tomcat/bin/catalina.sh", "run"] 
+
+	
+DOCKER COMPOSE
+To run a multi container application in a diclarative formate Docker compose tool is used, it is defined in yaml script, docker compose will create a default network	
+ex: version: '3'
+    services:
+      mongodb:
+        image: mongo
+        ports:
+         - 27017:27017
+        environment:
+         - MONGO_INITDB_ROOT_USERNAME=admin
+         - MONGO_INITDB_ROOT_PASSWORD=password
+      mongo-express:
+        image: mongo-express
+        ports:
+         - 8080:8080
+        envirnoment:
+         - ME_CONFIG_MONGODB_ADMINUSERNAME=admin  
+         - ME_CONFIG_MONGODB_ADMINPASSWORD=password
+         - ME_CONFIG_MONGODB_SERVER=mongodb
+		 
+DOCKER COMMANDS:
+. docker ps
+. docker ps -a
+. docker run -it --name container name image name: version /bin/bash
+. docker run -d image name==> run in detached mode
+. docker run -it --name vol1 -v /myapp1(host dir):/dvs7(container dir) image name /bin/bash = to create container with volume mounting to it
+. docker run -p<new port no>:<old port no> image name
+. docker commit <container name> <image name> : <version ==> 
+. docker images
+. docker push image name = to push image to the docker hub repo to create image from container
+. docker pull image name: version
+. docker start container name
+. docker stop container name
+. exit = exit with stopping container
+. docker exec -it container name /bin/bash = entering into the container
+. docker logs -f container name
+. docker network ls ==> shows the networks in docker
+. docker network create <name> ==> to create custom network 
+. docker-compose -f file name UP ==> to start the container using docker compose
+. docker-compose -f file name DOWN ==> to stop the container using docker compose 
+. docker info
+. ctrl+p+q = exit without stopping container
+. docker inspect container name = details of the container
+. docker commit container name (finel image name): version = to creat container image
+. docker commit -p <container ID> my-backup ==> to create snap shot for creating backup
+. docker save -o ~/myback.tar mybackup==> to create tar file
+. docker build -t "image name:v1" .
+. docker rm -f container name
+. mkfs.ext4 /dev/xvdf = to reset the new disk before use
+. mount -t ext4 /dev/xvdf /folder name/ = to mount disk to a folder
+. docker top container name = to know the information of a perticular container
+. docker stats = to check all container performance
+. docker ps -q = to get all container ids
+. docker rmi -f image name = delete image
+. docker rmi -f $(docker images|grep -v -e "REPOSITORY\|centos"|awk '{print $3}')
+ . docker save -o imagebundle.tar d0d4e7470bd2 = to build image as tar file
+. docker load -i my image name.tar.gz = to untar the image
+. docker tag <image name> <user name>/image name=  to give duplicate name or tagging
+. docker image prune -a ==> to delete unused image
+. docker login = to login to docker hub
+. docker container ls==> to get the container ID
+. gzip image name.tar = add zip to a tar file
+. man docker-network ==> to get the detailes
+. scp file ec2-user@ip address:/path/ ==> it wiil copy the files from one server to another server
+	

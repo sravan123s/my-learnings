@@ -1,0 +1,11 @@
+. What you are  doing in current project ?
+=>. we are having our cloud , we host all our infrastructure in the cloude in aws wherei will maintain manage and configure things 
+in aws apart from that we are handlimg different application nodejs and java i design thne pipeline in jenkins, if any some issue comes 
+i will piching and solving the thins apart from this things we are running all this things on EKS all this applications are running in 
+kubernetes where i will design CI and CD for them if some issue comes in the deployment and other things i will look into that
+. How you are designing CICD ?
+=>. Developer will be there he will push the code to the git repo we are having the git repo in git hub we configured the hookin trhe jenkins
+we are going to have a build job this will get builded nd going to inform to developer whether the build is successful or failure, if it is 
+success there is his PR all his collegues come and give approvel after approvel the will get merge to the master branch, my depoyment pipeline 
+will get triggered from there it will goesto the env
+

@@ -1,0 +1,86 @@
+WHAT IS ANSIBLE?
+ Ansible is an open source IT configuration management and automation platform. It uses human-readable YAML templates 
+ so users can program repetitive tasks to happen automatically. 
+
+WHICH AMONG PUPPET, CHEF, SALTSTACK AND ANSIBLE IS THE BEST
+CONFIGURATION MANAGEMENT (CM) TOOL? WHY?
+
+WHAT ARE THE GOALS OF CONFIGURATION MANAGEMENT PROCESSES?
+ The purpose of Configuration Management is to identify, record, control, report, audit and verify service 
+ assets and configuration items, including baselines, versions, constituent components, their attributes, and relationships.
+ 
+WHAT IS PLAY BOOK,USES OF ANSIBLE PLAYBOOK?
+Playbook is a set of instructions which are used to do some tasks It is used to install packages and configure large number of servers with in 
+a short time, in ansible playbooks as well as conditions, variables and tasks can be saved, shared and reused
+
+WHAT IS AN ANSIBLE MODULE?
+ Some of the modules are Package management,copy,Debug,File,Lineinfile,git,Cli_command,Archive,Command, we use yaml syntax to pass modules in playbook
+
+WHAT IS IDEMPOTENCY?
+ an action which, when performed multiple times, has no further effect on its subject after the first time it is performed
+
+WHAT ARE ROLES IN ANSIBLE?
+ Roles are used to reduce the code complexity by writing code in multiple files and act in a single node. Roles let you automatically load related vars, 
+ files, tasks, handlers, and other things based on a known file structure. After you group your content in roles, you can easily reuse them 
+ and share them with other users.
+ by default in roles we have apache in apache we have defaults,files,handlers,meta,tasks,templates,vars
+
+SAY ANY 10 MODULES IN ANSIBLE
+ command,script,copy,yum,tasks,url,file,service,template,debug,regester,set-fact
+ 
+    ANSIBLE             CHEF
+   agent less		agent based
+   default port 22	customised ports
+   python		    rubi
+   push based		pull and push based
+   playbooks		cookbooks
+   free			    licensed, above 8 servers need to pay 
+    
+DEBUG MODULE
+At any point of time if we want to get the data from the ansible playbook we will use debug module,
+the beauty of the debug module is to check what is happening in the code
+
+WHAT IS ANSIBLE GALAXY
+Ansible galaxy is a repository of ansible roles which are used in playbook to exicute in various hosts, those hostes are connected through ssh  protocol,
+which can be managed by controller servers(home, search, community)
+
+ANSIBLE VAULT: To store any secrets we use ansible vault
+to create vault--> ansible-vault create vault name.yaml  it will be encrepted
+if we want to decript we have to use password 
+ex:
+---
+- name:using ansible vaults
+  hosts: all
+  become: true
+  vars_files:
+    myvault.yaml
+  tasks:
+    - name: printing my bd name
+	  command: echo "{{ mydbname }}"
+	  
+in this db name is stored in vault
+when ever we execure playbook we need to  give like it need to ask for password like: ansible-playbook playbook.yaml --ask-vault-pass 
+
+
+We can pass variables to playbook in the cli we will use -e flag and that variables for that
+
+host_vars: It is used when we want to pass any variables to spesified hosts, for this we need to create server name.yaml the server name must be in the hosts file in that yaml file 
+group_vars: this also same as abouve but it will execute in all server which is in that group
+serial: to execure code in given no one by one for example if we give one the code execution will be one by one if we give it as 10 it will execure fir 10 server at once and again 10 servers like that           
+
+ansible-playbook <playbookname.yaml> --step: for every time to execute the task it will ask for permission to execure or not
+ansible-playbook --start-at-task "the task name " or "tags"  playbook name.yaml
+
+example of ansible playbook
+---
+- name: installing httapd
+  hosts: all
+  become : true
+  tasks:
+    - name: install https
+      yum:
+        name :httpd 
+        state: latest 
+
+ANSIBLE COMMANDS
+ansible-playbook -i hosts <playbook name>

@@ -1,0 +1,45 @@
+How to integrate elastic search with kibana?
+ Elastic search has enrolment token in the /usr/share/elasticsearch/bin/elasticsearch-create-enrillment-token -s kibana run this in elastic vm & generate verification code in kibana in /user/share/kibana/bin
+ 
+How to access elastic search through cli?
+command: curl --cacert /etc/elasticsearch/certs/http_ca.crt -u elastic -k -X GET https://localhost:9200
+
+How can we increase and decrease shards?
+We can use split API and Shrink API to do the so
+
+Replication group=primary shard+replica shard 
+
+example querys
+GET /_cat/nodes?v ==> To get all nodes
+GET /_cat/indices?v ==> To get all the indices
+PUT /<index_name>   ==> To create index with shards
+{
+  "settings": {
+    "number_of_shards": 2,
+	"number_of_replicas": 2
+  }
+}
+POST /<index_name>/_doc  ==> To add docs to index
+{
+  "name": "elastic",
+  "Price": "100"
+}
+PUT /<index_name>/100    ==> To add index with id(here 100 as id)
+POST /<index_name>/_update/id ==> To update any index
+{
+  "doc": {
+    "Expiry_date": 200
+  }
+}
+POST /<index_name>/_doc/id  ==> It will create or update the doc i the index beacuse of "upsert"
+{
+  "script": {
+    "source": "ctx._source.Expiry_days++"
+   },
+   "upsert": {
+     "name": "Linux",
+     "Exxpiry_days": 99
+   }
+}
+   
+

@@ -1,0 +1,33 @@
+INTEGRATING SONARQUBE WITH JENKINS
+  Create tokens in jenkins and sonarqube as well, then install sonarqube plugin in jenkins then after give sonarqube token in jenkins path is 
+  ((Jenkins > Credentials > System > Global Credentials > Add Credentials))then Now, We need to add SonarQube server settings into Jenkins
+  ((Manage Jenkins > Configure System > SonarQube servers [Scrol Down])),ADD SONAR-SCANNER FOR JENKINS((Goto Jenkins > Manage Jenkins > Global Tool Configuration > 
+  SonarQube Scanner [Scrol Down] > Add SonarQube-Scanner)),Configuring sonar-scanner cli on jenkins server or slave node,then add webhook in sonarqube with jenkins token
+  
+INTEGRATING DOCKER WITH JENKINS
+   First need to install docker s/w in jenkins and manage docker plugins, then manage credentials which means add a credential
+ 
+INTEGRATING JENKINS WITH KUBERNETES
+  Install the kubernetes plugin in jenkins and go to manage nodes and cloud then go to configure clouds add new cloude as kubernetes and add kubernetes URL and certified key 
+  before adding key we need to decript the key before this keys are in encrepted,Make sure that you are saving the "cert.pfx" file in the local and upload it to 
+  the jenkins during the credentials configuration
+ 
+INTEGRATING ANSIBLE WITH JENKINS
+  take two servers one with ansible and other withe jenkins software then go to jenkins and install ansible plugin and we need to go to the global tool configuraytion and 
+  search for ansible and configure and then we need to connet the two serevers with ssh keygen by using the public key
+
+INTEGRATE ANSIBLE WITH JENKINS?
+
+ https://devops4solutions.com/integrate-ansible-with-jenkins/
+ 1.Jenkins Server where Jenkins is installed
+ 2.Jenkins service should be running under some user. By default Jenkins running under jenkins user
+ 3.Ansible Software installed on Jenkins Server
+ 4.Ansible Plugin
+ 5.Configure that user to run the Ansible playbook
+ 
+GITHUB WITH JENKINS INTEGRATION==>
+ in sorce code management give github url, allow GitHub hook trigger for GITScm polling in jenkins add webhook with jenkins Payload URL in github
+ 
+JENKINS INTEGRATION WITH NEXUS?
+First we have to install nexus artifact uploader  plugin in jenkins, in jenkins in build step we add nexus artifact uploader there we need to add nexus url and 
+credentials,  

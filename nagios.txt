@@ -1,0 +1,14 @@
+WHAT IS NAGIOS? HOW DOES IT WORK?
+Nagios is an open source monitoring system for computer systems. ... Nagios software runs periodic checks on critical parameters 
+of application, network and server resources. For example, Nagios can monitor memory usage, disk usage, microprocessor load, 
+the number of currently running processes and log files.
+
+WHAT IS NRPE (NAGIOS REMOTE PLUGIN EXECUTOR) IN NAGIOS?
+The Nagios daemon which run checks on remote machines in NRPE (Nagios Remote Plugin Executor). 
+It allows you to run Nagios plugins on other machines remotely. You can monitor remote machine metrics such as disk usage, CPU load etc. 
+It can also check metrics of remote windows machines through some windows agent addons.
+
+WHAT ARE THE CONFIGURATION FILES INVOLVED IN NAGIOS?
+command.cfg, contacts.cfg, localhosts.cfg, templates.cfg, timeperiods.cfg, switch.cfg,printer.cfg, windows.cfg
+
+==> nagios home path is user/local/nagios/, in user/local/nagios/etc/ we have all our configuration files

@@ -1,0 +1,208 @@
+1. Difference b/w SG and NACL(Network access control list)
+a. SG works at server level ,NACL works at subnet level
+   SG are state full sets, NACL are state less sets
+2. can i suspend s3 bucket
+a. no we cant suspend, we can disable
+
+5. for creating directory we need permission[755]--default[777]
+6. for creating file we need permission[644]--default[666]
+7. can we decreate the file system size dynamically
+a. no
+
+17. To pass any arguments in CL we will use "-e" 
+18. In ansible conditions==> when,loops==>items
+19. Ignore-errors
+a.  To skip from non executable task
+20. In ansible we can use "-l" to execute the programme in a perticular server out of no of servers
+     ex. ansible playbook -l server1 (or) "-i" creat a file and place the server names in it (inventory file)
+21. Structure of a role. default things you will get while creating role
+22. Say any 10 modules in ansible/terraform,pyton
+a.  Handlers,tasks,url,file,service,template
+23. Diff b/w Git and Git Hub
+24. conflits
+25. How to configure auto trigger from git to jenkins
+26. How to change port no 8080->80
+a. Go to conf folder in tomcat installation directory e.g. C:\Tomcat 6.0\conf\
+   Edit following tag in server.xml file <Connector connectionTimeout="20000" port="8080" 
+   protocol="HTTP/1.1" redirectPort="8443"/>
+   Change the port=8080 value to port=80.
+   Save file.
+   Stop your Tomcat and restart it
+27. CMD and ENTRYPOINT
+28. ADD and COPY
+29. Any optimisations done on deocker
+a. Don't install unnecessary packages. ...
+   Implement . ...
+   Sort multi-line arguments. ...
+   Decouple applications. ...
+   Minimize the number of layers. ...
+   Leverage build cache.
+30. Multi statge docker builds
+31. Can we have even no.of masters
+a. No bcs to avoid split brain issue we have to opt for odd no.of masters in kubernetes
+32. What are master components and worker components
+33. In kubernetes how your cluster look like 
+34. Non prod cluster			prod cluster
+     dev,sit,uat,pt			pre-prod,prod
+35.In kubernetes deployment stratagy
+ a.rolling update: in this if we make any changes to deployment configuration it will affect the pod one by one it means it will kill one pod and generate another one by one
+   recreate:in this if we make any changes to deployment configuration it will affect all pods at a time it means it will kill all pods at once and create all pods at a time 
+   custom:
+36. persistant and non-persistant data
+a. permanent(pv $ pvc) and non permanent
+
+37. Statefull vs stateless pods
+a. If any pods depends on volumes those are called state full pods,any pods which are independs on volumes those are called state less pods
+
+
+38. what is symbolic link and hard link
+39. How do u install a package
+40. Difference b/w file system and a folder
+41.  how many types we can creat a file system
+a. LVM and standered partiation
+42. How do you verify whether the application running or not
+a. we login to the server and we will verify the app status using "ps -ef|grep -i app name" if iam not getting any data 
+   i will verify whether the application is running on a perticular port or not "netstat -nap|grep portno" ,if the applicaton
+   not running on that port i will try to start the app "systemctl start app name" , still there is some issue i will verify 
+   logs using "tail -f /var/log/app.log" once i figured out the issue i will inform to application developer.
+43. How do you find out appliation performance
+a. Historical information like cpu and memory if this guy required some memory ill start looking out for a server with 
+   optimised memory that is taking instances like c5 medium and m4
+44. How do you verify port status, how do u configure file systems
+a. netstat -nap|grep portno for ports status, 
+45. serever is not reachable how do you troublehoot
+a. firts i will ping ip if the server is not reachable i will try to do a ssh ip address if it is not reachable i will loged into the 
+   console the first command i will give is "ifconfig -a" check ether0 if it is down give systemctl resart the network once we restart 
+   we will try to ssh now the server is up and running still iam not able to access the server now i will check SG whether my ip is 
+   allowed or not and i will verify when iam hitting my vpc that is my IGW i will verify my route table, NACL, subnet ,EC2 and SG
+   most of the cases if the server is not reachable reason is my SG still if it is not reachable under my NACL i might blocked my ip address
+46. Recent automation done using shell scripting
+a. monitoring- i wrote a script like to do custom health checks so what my script will do it will exicute for evary 5 min if it ok it 
+   will send ok msg else it will send email to my mail address
+47. what is $? , $# , $1,$2,$3 , $0
+48. wite infinite loop
+a. while true
+   do 
+      echo "HI"
+   done
+
+49. how do you know the previous commands exicuted or not
+a. if[[$? == 0]]
+     then 
+   
+   fi
+50. why shebang (#!) symbol used?
+    It is used to define where the code should be executed 
+50. In shell scripting there is no need of indendation
+50. want 10 modules of python
+a. sys,boto3,os,sub-process,password,smtp,json,yaml
+51. in teraform they might ask for scenario which is give one ec2 bounded to vpc with its own key-pair and SG, then will send a 
+    app code (java or nodjs) and write as a IAC or pac and push that code to the github and share the gitrepo link
+52. how are you mannaging the tfstate file
+a.  there are two ways 1. GIT 2. S3 with dynamodb
+53. iam running my ec2 instance it is not a part of my terraform code is there any posibility to make it as terraform code
+a. yes, import command helps to convert infrastructure to code
+54. infra provisionig and infra controlling
+55. hostes file management , dynameic host management
+a. by giving tags to my ec2 instances
+56. 10 modules which you are using in ansible 
+a. command,script, get url, debug,regester,set-fact,copy,handler,
+57. iam running my code thete is one task failed i want to skip my task how?
+a. ignore_errors
+58. i have a task that i want to run in a perticular server or a other servers we will use
+a. delegate to
+59. if the task should execute locally from where you are executing
+a. local_action
+60. i executed a code and the code failed on 5 serevrs, now i want exicute code on failed servers
+a. ansible-playbook -i list of failed servers
+61. chef vs ansible
+
+63. how you are managing the high availability in jenkins or have u configured the replication for jenkins?
+a. no replication there will be only one master, we have our /var/lib/jenkins from out NFS or EFS, under my LB i have my master 
+   and standby master, 
+   when customer hits my jenkins.com to my LB 
+64. how you are managing jenkins builds
+a. shared library- we have a shared library once we write a code in shared library it get shared 
+65. in dockers how do you build, run,push , what is repository,container, how do we work with containers, how do u optimise the 
+    build size or image size , multistage builds
+66. in kubernetes my deployment not working what will we do?
+a. kubectl get deploy==>kubectl get pods -l deploy selector name==> kubectl logs -f pod name it will give me info (or) kubectl  
+   describe pod pod name
+67.What kind of error msgs you will observe?
+a. configmap errors , iamge pull errors, pv bound issues, out of memory (OOM)
+68. What is Schuduling,node selector,labels,selectors, diff b/w deployment and demon set , replicaset , how do u patch , how 
+    do u add and remove node cluster, status not ready ,schudule disabale
+a. labels: Labels are key/value pairs that are attached to objects, such as pods. Labels are  used to identifying attributes of 
+   objects that are meaningful and relevant to users, but do not directly imply semantics to the core system.
+   Selector: Here is you can see selector tag, which is used by deployment to talk with its pods here Deployment finds which Pods 
+   to manage. In this case, you simply select a label that is defined in the Pod template
+   Node selector:A node selector specifies a map of key/value pairs that are defined using custom labels on nodes and selectors 
+   specified in pods. For the pod to be eligible to run on a node, the pod must have the same key/value node selector as the label on the node.
+   Replicaset: A ReplicaSet's purpose is to maintain a stable set of replica Pods running at any given time. As such, it is often used to guarantee the availability of a specified number of identical Pods
+69. What is static pod (or) i want to run a pod without master is it possible
+a.  yes, we can do it we have to put pod.yaml file in the /etc/kubernetes/manifests/ that's it kubelet will Give the pod 
+    " pod name followed by serever name"
+70. Access modes you have PV and PVC
+71. PROB-
+72. paching and cluster management
+73. In 4 pod 3 only responding why--> Hung
+74. diff b/w schedule disabled and drain
+75. have you ever done patching , what are the steps to do patching
+a.  svr backup, etcd backup, pick 1/2 works and 1 master, drain the node, we do patching, set shedule disable to false(un cordon)
+76. Ingress
+77. what have you done in your project w.r.t monitoing?
+
+78. how do u trouble shoot application issues?
+a. first i need to go to application server and check logs if the logs are noy gettting or not understanding then we will curl with ip and port,
+   even though it is not working means i will hit in the browser if all the things what we are doing is not working then inform to the application guy
+
+git hub api
+build life cycle of maven==> clean build and site
+how can u copy data from one serever to another serever in jenkins
+what is the diff b/w sonar gate and quality profile
+diff b/w containerazion and virtualilazation==> memoty utilazation if u rae wasting 4 gb if data we cant take it back
+ingress in kubernetes
+about docker volumes
+helm,exit status
+handlers==> if something notifies handlers will do work
+docker compose
+use of command &&==> for process id
+&?==> previous command execution status
+trap command
+
+to find the file existance in shell we can find through executing code.
+if we want to check the version of any package we can use case statement
+
+AWS --region us-east-1 sns publish --topic arn "arn name" --message "testing mail service"==> to send email notificatio n
+crontab==> to schedule a event like copping moving in a specified time, we use crontab(ex: we need to mv some log files daily 4am)
+
+What are you doing with shell scripting daily?
+check the shell scripting student notes there will be some shell scripting use cases
+
+==> In ansible we will use -l in cli for limiting the servers for execution 
+
+==> In Docker Networking after creating the docker server by installing docker software there will be a default docker0 port 
+    it will manage the ip address of the containers, if we want we can create custom network the command is docker network create 
+    we can create then after all the ips of the containers you create is from custom network range 
+    there are 3 types of networking
+    1. Bridge networks==> It is used with the single host
+    2. overlay networks==> It is used to conmmunicate between multi hosts
+    3. macvlan networks==> IS is used to connect docker containers directly to the host network interfaces
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

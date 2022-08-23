@@ -1,0 +1,7 @@
+WHAT ARE ON DEAMAND, SPOT, RESERVED, DEDICATED INSTANCES?
+ONDEAMAND:if we want instances at the time of our need we want to pay more money bcs we dint plan any thing before
+SPOT:It is like bidding instances on hourly bases, for ex if u bid a serevr at $5 if another person will bid more 
+     than that $5 that server will go to that person so better not to keep any valuable data in spot instances
+RESERVED:To decrease the cost of instances we will reserve them earlier
+DEDICATED:In AWS data centers there are many racks in normal if we lanch aws instance it will go to any one of 
+          the racks but in dedicated aws will give one dediacted rack to us now all the instance we lanch will go to that rack ;p/

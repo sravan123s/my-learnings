@@ -1,0 +1,316 @@
+HOW TO CONFIGURE TLS CERTIFICATES
+In ingress yaml script we need to add tls attribute and give the host which is in the rules section and give secret name and the secret is look like as below
+ apiVersion: v1
+ metadata:
+   name: myapp-secret-tls
+   namespace: default
+ data:
+   tls.crt: base64 encoded cert
+   tls.key: base64 encoded key
+ type: kubernetes.io/tls
+ 
+In this we need to remenber 3 things
+1. Data keys need to be "tls.crt" and "tls.key"
+2. Valuesare file contents Not file paths/locations in data section
+3. Secret component must be in the same namespace as the ingress component
+
+ 
+STORAGE CLASSES
+Storage classes provides persistance volumes dynamically, when the PVC climes it, we can specify the storage class by yaml files also in tha ymal file we have provisioner 
+section in that we can give which cloud providers supporting PV component
+
+ HELM CHARTS
+ Helm is a package manager in kubernetes we are using  different different yaml files to install packages, helm charts are used to make that yaml files as a bundle and execute 
+ at a time there is a helm hub we can keep this yaml files in that helm hub and use them when ever we want
+Helm chart directory structure:
+Mychart/         ==>Name of the chart
+  Chart.yaml     ==>meta info about chart
+  Values.yaml    ==>Values for the template file
+  charts/        ==>chart dependencies
+  templates/     ==>the actual template file
+  ...
+command to install chart is =>helm install <chartname>
+
+Minikube: It is a one node cluster which is having both master and worker nodes, it creates virtual box in the cluster and the pods are created in that virtual box
+          It is used for testing in side the cluster
+
+SERVICE MESH 
+To give communication between micro services service mesh is used and we can take ISTIO as service mesh tool
+traffic Splitting which means when you pushed new version to the production if it contains a bug then the application 
+will go down at that time service mesh will help in such a it can split the traffic and send less traffic to the new version
+
+WHAT IS KUBERNETES
+kubernetes is a containerization and orcestration tool, simply it is defined as the cluster of docker
+
+WHAT IS CONTAINER
+Container is a light thread process which help you to perform some task inside in it.
+
+WHAT IS POD
+Pod is the resource which is used to create the container 
+
+WHAT IS JOB?
+Job is a higher level abstraction that uses pods to run a completable task
+
+WHAT IS DEPLOYMENT
+It is used to convey the details for creating the pod
+
+WHAT IS DAEMONSET
+Daemon is a process which runs continuously, diff b/w deployment and demonset is in deployment if we are giving replica count to 3 we can  saw all the 3 replica pods
+are going to same node or different nods but where as in if we give demonset each pod will go to each node, if we spin up a new node automatically new pod will
+come in that  node also
+
+WHAT IS SERVICE 
+Service is act like a load balance, in deployment there are many pods those pods have different ip addresses so to expose those pods 
+to outside world we use service all the pods are mapped to the service when the customes hitting the service ipaddress it will redirect 
+all traffic to the pods
+
+WHAT IS NAME SPACE
+Name space is like a cluster in the kubernetes cluster by default there will be 4 namespaces created by the kubernetes, we need namespace in the cluster bcs if two teams are 
+working in the same cluster if one team created deployment with one name if the other team also accedentally created a deployment with the same name but with diffetent 
+configuration then what will happen is the 2nd deployment will over wright the 1st deplyment so that we will create the name space for each team and we can give access to 
+teams not to enter other than their namespaces
+default NS
+default
+kube-system
+kube-public
+kube-node-lease
+
+INGRESS
+ Ingress is used for the redirection to make ingress to work we need ingress controller to be installed, on top of the nigress we have a proxy server which is out side of the cluster 
+ the request from customers is first go to the proxy server and then to the nigress, in ingress we have rules and host section in host section we will give the main host
+ for example vehicles.com in the path section we will give like cars and bykes, when the customer hits vehicle.com/cars it will redirect to cars and is same for bykes as well
+
+STATEFULL(Devops 16th class T:30:00) 
+  The pods which depends on volume is called as statefull, if there is no volume pod will be not up
+STATELESS : The pods which are independent on volume is calles as stateless
+
+Probs (Devops 15th class T: 55:00)
+Liveness prob: Suppose that a Pod is running our application inside a container but due to some reason lets say memory leak, cpu usage, application deadlock etc the 
+               application is not responding to our requests, and stuck in error state
+               It checks the container health as we tell it to do and if some reason the liveness probe fails it restarts the container
+Readiness Prob:This type of prob is used to detect is a container is ready to accespt traffic you can use this prob to manage wich pods are used as backends for 
+               load balancing services If a pod is not ready it can then be removed from the list of load balamcers
+ 
+
+WHAT IS CLUSTER IP, NODEPORT, LOADBALANCER
+CLUSTER IP==> It is used for the internal communication that is for pod to pod like that, for example app pod is to communicate to db pod like that
+NODE PORT==> It is used for testing the application internally that is with the network, this port ranges from 30000, in this we can take any
+             worker node ip address fallowed by the node port we can see the application working on the web
+LOAD BALANCER==> It is used when we feel to expose our application to external vendor our network team will give a range of external ips throung that ips  
+                 any one can access the application			 
+
+IN KUBERNETES DEPLOYMENT STRATAGY
+   ROLLING UPDATE: in this if we make any changes to deployment configuration it will 
+   affect the pod one by one it means it will kill one pod and generate another one by one
+   RECREATE:in this if we make any changes to deployment configuration it will affect all 
+   pods at a time it means it will kill all pods at once and create all pods at a time it required downtime
+
+HOW DO YOU VERIFY WHETHER THE APPLICATION RUNNING OR NOT
+  we login to the server and we will verify the app status using "ps -ef|grep -i app name"
+  if iam not getting any data i will verify whether the application is running on a perticular 
+  port or not "netstat -nap|grep portno" ,if the applicaton not running on that port i will 
+  try to start the app "systemctl start app name" , still there is some issue i will verify 
+  logs using "tail -f /var/log/app.log" once i figured out the issue i will inform to application developer.
+   
+SEREVER IS NOT REACHABLE HOW DO YOU TROUBLEHOOT?
+  firts i will ping ip if the server is not reachable i will try to do a ssh ip address if it is not reachable i will loged into the 
+  console the first command i will give is "ifconfig -a" check ether0 if it is down give systemctl resart the network once we restart 
+  we will try to ssh now the server is up and running still iam not able to access the server now i will check SG whether my ip is 
+  allowed or not and i will verify when iam hitting my vpc that is my IGW i will verify my route table, NACL, subnet ,EC2 and SG
+  most of the cases if the server is not reachable reason is my SG still if it is not reachable under my NACL i might blocked my ip address   
+   
+IN KUBERNETES MY DEPLOYMENT NOT WORKING WHAT WILL WE DO?
+  kubectl get deploy==>kubectl get pods -l deploy selector name==> kubectl logs -f pod name it will give me info (or) kubectl  
+  describe pod pod name  
+
+LABELS: Labels are key/value pairs that are attached to objects, such as pods and nodes. Labels are  used to identify the pods where should go in which
+        deployment they should go like that 
+SELECTOR: Here is you can see selector tag, which is used by deployment to talk with its pods here Deployment finds which Pods 
+          to manage. In this case, you simply select a label that is defined in the Pod template
+NODE SELECTOR: It is given in the pod or deployment defination, we will give node selector values as key value pairs and those key value pairs are given to the nodes 
+               as lables  
+REPLICASET: Replicasets are used to give high availability of application in the pods if one pod kills one more pod is in standby to serve the application traffic.   
+             
+REPLICATION CONTROLLER: A ReplicaSet purpose is to maintain a stable set of replica Pods running at any given time, it is also used for at the time of autoscalling 
+when the traffic is increasing to the application we need more pods to serve these type of requests we use replica controllers 			
+			
+
+HAVE YOU EVER DONE PATCHING , WHAT ARE THE STEPS TO DO PATCHING
+  svr backup, etcd backup, pick  workers and 1 master, drain the node, we do patching, set shedule disable to false(un cordon)	
+
+MASTER COMPONENTS
+SCHEDULER==> It is used to create containers in worker nodes by calculating resources in the noods like cpu memory
+CONTROLLER==> It is used to manage the containers in the worker nodes if the pods die for any reason it communicate to the scheduler to create pods
+ETCD==>It act like a Brain of kubernetes, is is  used to store the information of our requirement.
+API SERVER==> It act like a gate keeper in the master node , when ever you want deply any application into the cluster we need to request to the API server 
+WORKER CONPONENTS
+KUBELET==>it is used to communicates between worker nodes to master nod like it will take configuration about pods with api server and maintain the containers in the pod
+KUBE PROXY==> It is used for communication between the pods in the worker nodes
+CONTAINER RUNTIME==> to run containers in workers we need docker s/w as we called it as docker run time
+
+WHAT KIND OF ERROR MSGS YOU WILL OBSERVE?
+ configmap errors , iamge pull errors, pv bound issues, out of memory (OOM)
+ 
+What is sidecar container?
+In a multi container pod the container user for the main application container is called as sidecar container
+ 
+WHAT ARE DEMONSETS?
+Demon is the process which is runnig continuosly in backend, in kubernetes we use this at the deployment to set the pods like one pod in one node we can say that as 
+each one catch one policy
+
+TROUBLESHOOTING Kubernetes?
+ CHECK==>Sudden jumps/load increased,Roll backs,logs,SSH, Crash loop backoff(if issuein docker file, if u have same port nu for two containers inside the same pod, cant pull the image)xxsca
+
+WHAT IS PV AND PVC?
+PV==> It is a cluster component which is bounded to the cluster
+PVC==> It is a bounded to namespace 
+Here the DEPLOYMENT configuration is connected to pvc, pvc connected to pv and pv is to the workernodes, when ever the pods in deployment configuration write
+some data to pvc the data will go to the pv which is connected to the worker nodes
+
+CONFIGMAPS: this is definesd as for example we have a application connecterd to data base we want data base urls so we keep 
+            them in the configmap and give them to the pods when ever they want simply call them like configmapkeyRef
+SECRETS: this is defined as when we can not store our data base data like user name and passwords in a simple text format it is not 
+         the best practice so we can keep them in secrets in secrets the data is encrepted in base64 model we can call then as secretkeyRef
+		 command to convert text to base64 encoded is echo -n <text> | base64 to decode echo -n <text> | base64 --decode
+
+DIFF B/W RETAIN AND RECYCLE
+RETAIN==> If we have created PV and PVC type as retain then the data in the pv is safe when we  delete pvc 
+RECYCLE==> If we have created PV and PVC type as recycle then the data in the pv is deleted when we delete pvc
+
+TAINTS AND TOLERATIONS 
+Tolerations are applied to pods, and allow (but do not require) the pods to schedule onto nodes with matching taints
+Taints and tolerations work together to ensure that pods are not scheduled onto inappropriate nodes. One or more taints 
+are applied to a node; this marks that the node should not accept any pods that do not tolerate the taints.
+YOU ADD A TAINT TO A NODE USING KUBECTL TAINT COMMAND
+kubectl taint nodes node1 key1=value1:NoSchedule
+TO REMOVE THE TAINT ADDED BY THE COMMAND ABOVE, YOU CAN RUN:
+kubectl taint nodes node1 key1=value1:NoSchedule-
+
+CRONJOB?
+A Cron Job creates Jobs on a time-based schedule, A CronJob object is just like an entry in crontab in Linux. It runs a job periodically on a given schedule
+ ┌───────────── minute (0 - 59)
+#      |      │ ┌───────────── hour (0 - 23)
+#      |      │ │ ┌───────────── day of the month (1 - 31)
+#      |      │ │ │ ┌───────────── month (1 - 12)
+#      |      │ │ │ │ ┌───────────── day of the week (0 - 6) (Sunday to Saturday;
+#      |      │ │ │ │ │                                   7 is also Sunday on some systems)
+#      |      │ │ │ │ │
+#      |      │ │ │ │ │
+# CRON_TZ=UTC * * * * *
+
+HOW CAN WE RESTRICT COMMUNICATION BETWEEN PODS
+You can limit communication to Pods using the Network Policy API of Kubernetes.
+The Kubernetes Network Policy functionality is implemented by different network providers, 
+like Calico, Cilium, Kube-router, etc. Most of these providers have some added functionality that extends the main Kubernetes Network Policy API
+
+3 STEPS TO TROUBLESHOOT KUBERNETES DEPLOYMENTS
+You should make sure that your Pods are running, then
+Focus on getting the Service to route traffic to the Pods and then
+Check that the Ingress is correctly configured.
+
+KUBERNETES COMMANDS:
+
+. kubectl delete -f filename.yaml
+. kubectl delete pod <pod name> ==>  to delete the pod
+. kubectl delete pod <pod name> --force ==> to delete the pod forcefully
+. kubectl describe pod pod-name
+. kubectl describe service service-name
+. kubectl describe namespace namespace-name
+. kubectl describe <objecttype> <objectname> 
+. kubectl get nodes
+. kubectl get namespace (or) ns
+. kubectl get pods (or) po
+. kubectl get pods -o wide = to get full detailes
+. kubectl get deploymentconfiguration (or) deploy
+. kubectl get ingress -n <namespace> --watch==> to show the ingress with ip address
+. kubectl get deployment <deployment name> -o yaml
+. kubectl set image deployment/<deployment name> pod name= image:version --record ==> we can edit the deployment we can cange the image
+. kubectl create -f filename.yaml
+. kubectl apply -f filename.yaml
+. kubectl replace -f filename.yaml 
+. kubectl logs pod name
+. kubectl logs pod name --previous ==> to check the logs of previous pods
+. kubectl scale deploy deploy name --replicas=3 ==> to scale up 
+. kubectl get nodes -l env=dev = to get labeled nodes
+. kubectl label node <node ip> <label key> = <label value> ==> to give labels to nodes
+. kubectl get pods --all-namespaces = gives entire pods running in the entire cluster
+. kubectl config set-context --current --namespace=<namespace name> ==> to change the default name space
+. kubectl rollout restart deployment <deployment name>
+. kubectl rollout history deployment <deploymentname>==> will give the resent changes
+. kubectl rollout deployment <deployment name> -to-reversion= that no==> to go back to the previous version
+. kubectl create deployment <depl name> --image=<image>
+. kubectl api-resources --namespace=false ==> it will show the resources which are not connected to namespace
+. kubectl set image deployment.v1.app/nginx-deployment nginx=nginx:1.161 ==> to change the deployment image
+
+1.TROUBLESHOOTING PODS
+IMAGE PULL BACKOFF==>There are three common causes:
+The image name is invalid, 
+You specified a non-existing tag for the image,
+The image belongs to a private registry, and Kubernetes doesn't have credentials to access it.
+
+CRASH LOOP BACKOFF==>Usually, a container can't start when:
+You misconfigured the container.
+The Liveness probe failed too many times.
+you forgot the CMD instruction in the docker file
+debug: Check whether the pod is healthy
+for probs can check in 3 ways 1.exec, 2.http, 3.TCP
+
+RUN CONTAINER ERROR==>The error appears when the container is unable to start.
+The issue is usually due to misconfiguration such as:
+Mounting a not-existent volume such as ConfigMap or Secrets.
+Mounting a read-only volume as read-write.
+
+PODS IN A PENDING STATE
+The cluster doesn't have enough resources such as CPU and memory to run the Pod..
+The Pod is bound to a Pending Pvc
+
+PODS IN A NOT READY STATE
+if a Pod is Running but not Ready it means that the Readiness probe is failing.
+When the Readiness probe is failing, the Pod isn't attached to the Service, and no traffic is forwarded to that instance.
+
+DEBUGGING PODS
+check logs: kubectl logs pod name
+enter into container in interactive mode and check commands: kubectl exec -it[pod name] --bin bash
+
+2.TROUBLESHOOTING SERVICES
+If your Pods are Running and Ready, but you're still unable to receive a response from your app, you should check if the Service is configured correctly.
+So the first thing that you should check is how many Pods are targeted by the Service.
+You can do so by checking the Endpoints in the Service
+If the "Endpoints" section is empty, there are two possibilities
+You don't have any Pod running with the correct label (hint: you should check if you are in the right namespace).
+You have a typo in the selector labels of the Service.
+If you see a list of endpoints, but still can't access your application, then the targetPort in your service is the problem.
+
+3.TROUBLESHOOTING INGRESS
+
+If you've reached this section, then:
+The Pods are Running and Ready.
+The Service distributes the traffic to the Pod.
+But you still can't see a response from your app.
+It means that most likely, the Ingress is misconfigured.
+The Ingress uses the service.name and service.port to connect to the Service.
+You should check that those are correctly configured.
+You can inspect that the Ingress is correctly configured with: kubectl discribe ingress <ingress name>
+after giving discribe command there will be backend column If the Backend column is empty, then there must be an error in the configuration.
+If you can see the endpoints in the Backend column, but still can't access the application, the issue is likely to be:
+How you exposed your Ingress to the public internet.
+How you exposed your cluster to the public internet.
+
+
+		
+IF ANY DOUBTS CHECK THIS VIDEO https://youtu.be/X48VuDVv0do
+concepts timings are: 
+0:00 - Course Overview
+2:18 - What is K8s
+5:20 - Main K8s Components
+22:29 -  K8s Architecture
+34:47 - Minikube and kubectl - Local Setup
+44:52 - Main Kubectl Commands - K8s CLI
+1:02:03 - K8s YAML Configuration File
+1:16:16 - Demo Project: MongoDB and MongoExpress
+1:46:16 - Organizing your components with K8s Namespaces
+2:01:52 - K8s Ingress explained
+2:24:17 - Helm - Package Manager
+2:38:07 - Persisting Data in K8s with Volumes
+2:58:38 - Deploying Stateful Apps with StatefulSet
+3:13:43 - K8s Services explained		

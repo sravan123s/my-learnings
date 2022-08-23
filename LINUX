@@ -1,0 +1,162 @@
+What is TCP and UDP?
+TCP is a connection-oriented communication protocol. UDP is a connectionless communication protocol. TCP data units are known as packets. ... 
+UDP is designed for faster data transmission. TCP guarantees data delivery by prioritizing data integrity, completeness, and reliability
+
+On most Linux operating systems, the DNS servers that the system uses for name resolution are defined in the /etc/resolv. 
+ conf file. That file should contain at least one nameserver line. Each nameserver line defines a DNS server.
+
+WHAT IS INODE
+Linux Inodes
+An Inode number is a uniquely existing number for all the files in Linux and all Unix type systems.
+When a file is created on a system, a file name and Inode number is assigned to it.
+Generally, to access a file, a user uses the file name but internally file name is first mapped with respective Inode number stored in a table.
+
+POSITION PARAMETER?
+positional Parameters are used to pass the information to the shell directly with command line argument or indirectly using set and command substitution. 
+It can be assigned from shell argument and it is denoted by $N, where N is the single digit and referred as parameter N.
+
+WHAT IS SYMBOLIC LINK OR SOFT LINK?
+ Symobolic link act similarly to  shotcuts in windows, Such links points to program files and directories,
+ It also allowes u to access to it without having to go directly to entire pathname, But if we delete original file there is no use of shortcut file
+ to create soft link we will use "ln -s"  <file name>
+ 
+ WHAT ARE HAURD LINKS?
+ Hard links points directly to the physical  file or disk, and not on the path name. This means that if u 
+ try to rename or  move the original file the link well not break since the link is for the file itself, not the path where the file is located
+ to create hard link we will use "ln" <file name>
+ 
+WHAT ARE RUN LEVELS?
+There are seven different runlevels in Linux, from zero to six. different distributions may use the seven runlevels differently, 
+we need to check how the runlevels work on the specific distribution that we are using. 
+Runlevel 0 shuts down the system.
+Runlevel 1 is a single-user mode, which is used for maintenance or administrative tasks, or we can say as root user 
+Runlevel 2 is a multi-user mode. This runlevel does not use any networking services.
+Runlevel 3 is a multi-user mode with networking. This is the normal runlevel you are used to if you use a system that doesn’t boot into a GUI (graphical user interface).
+Runlevel 4 is not used. The user can customize this runlevel for their own purposes 
+Runlevel 5 is the same as runlevel 3, but it also starts a display manager. This is the runlevel you are using if you use a system that boots into a GUI.
+Runlevel 6 reboots the system. 
+
+TOP COMMAND
+PID: Shows task’s unique process id.
+PR: Stands for priority of the task. It is always (20+NI)
+SHR: Represents the amount of shared memory used by a task.
+VIRT: Total virtual memory used by the task.
+USER: User name of owner of task.
+%CPU: Represents the CPU usage.
+TIME+: CPU Time, the same as ‘TIME’, but reflecting more granularity through hundredths of a second.
+NI: Represents a Nice Value of task. A Negative nice value implies higher priority, and positive Nice value means lower priority. 
+    If Ni is negative the cpu time is zero, the %CPU time spent idle
+%MEM: Shows the Memory usage of task.
+
+HOW TO CHANGE PROCESS PRIORITY USING LINUX NICE AND RENICE ?
+You can change the process priority using nice and renice commands, Nice command will launch a process with an user defined scheduling priority. 
+Renice command will modify the scheduling priority of a running process.
+The process scheduling priority range is from -20 to 19. We call this as nice value.
+A nice value of -20 represents highest priority, and a nice value of 19 represent least priority for a process.
+
+for load average we will use "uptime" commamd
+
+VIRTUAL MEMORY?
+It is the memory management technique wich there will be mapping data to shared disks
+
+umask==>the umask values is controlling the default permissions we can change the umask value. 
+For example we have umask value 002 by default the file permissions are 666 so 666-002=644 this the default permission will get.
+
+The default file permission value is 0644, and the default directory’s is 0755
+
+CHECK THE CONNECTION BETWEEN TWO SERVERS?
+1. TELNET: telnet <dest ip> <port>
+2. NCAT OR NC: nc -vz <host name> ,port>
+3. WGET: wgey <URL>
+4. CURL: curl -v telnet://<IP>:<port>
+5. NMAP: nmap -p <port> <IP>
+6. PING: ping <IP>
+7.ifconfig
+
+usercan login to the server without the keys to do so what we have to do is after creating user we give pasword to that user through passwd command 
+after that go to /etc/ssh/sshd_config there we need to change password authentication to yes by default it is set to no
+
+LINUX DEFAULT DIRECTORIES
+                       PARENT
+     ____________________/__________________________
+	|       |        |        |       |      |      |
+   TMP     USR      HOME     VAR     ETC    ROOT   OPT
+TMP: It is for temporary purposes
+URS: what ever the commands we are executing in the linux os will be goint to this users directory
+HOME: What are the user we are creating in the linux every user identity is in the user home directory
+VAR: In this logs will be stored from the system starting time to now
+ETC: All the software configuration will present in etc
+ROOT: All the users in the linux has the HOME as their home directory but root users home directory is root
+OPT: Optional we can use or not no problem
+
+FILESYSTEM MANAGEMENT(if any doubts check the linux first video) 
+   File system--> any directory which is mount to the disk that directory we call as file system 
+   Working with Filesystem-->Standard partition,Logical Volume Management
+   Standard partition--> drawback is We cannot increase the filesystem size dynamically in standard 
+   |                      partition  it requires downtime.
+   |__> 1.primary, 2.extended, 3.logical
+    
+   Logical Volume Management==> physical volumes-->volume group--> logical volume--> data or mountpoint  
+
+sudo su -
+yum
+LS
+ls -l
+pwd
+cd 
+mkdir
+touch
+groupadd
+useradd
+chown
+chmod
+rm -f file name
+rm -rf ==> delete full server dont use this command
+ps -ef==> it will give all the process running the system
+netstat -nap==> it will give the port
+passwd==> to give password to the useradd
+fdisk /dev/xvdf==> to creat partician
+mkfs.ext4 dev/xvdf==> to formate disc
+blkid==> to check whether the disc is formated or not
+ifconfig -a===> to get private ip
+lsblk==> to show all discs
+df -hT==> to show all discs with type and size and mount points
+vgcreate==> to create vg
+lvcreate==> to create lv 
+vgextend==> to increase volume group
+lvextend==>to increase logical volume
+resize2fs==> to formate the newly added disk
+vgremove==> ro remove volume group
+lvremove==> to remove lv 
+$?==> is used to check the last executed command is success or not, when we execute echo $? if it returm 0 then the code is success other than 0 it is failure.
+$#==> it will give total no of arguments that is count
+$*==> it will give total number of arguments
+find /directory/ path/ -mtime -N -ls==> to find last N days modified files
+tail~N <file name> ==> It will give the last 10 command lines
+Head~N <file name> ==> It will  give the top 10 commands
+Usermod==> It is used to change any modifications to used and we can add user to group -a and -G flages are used to add user to a group
+chage-m(min days)2 -M(max days)30 -W(warning)3 -I(grase period of in active)5==> schedule time to change the password 
+if we want to give permission to specific group to access to a specific folder we need to change write permission to that group not for others while using chmod command
+userdel -r user name==> to delete user
+find . -type f -name "sravan*"==> It will give all the files starting with sravan in the same directory
+find . -type d -name "sravan*"==>It will give all the folders starting with sravan in the same directory
+find ~ -type f -name "sravan*"==>It will give all the files starting with sravan in the linux system
+find ~ -type d -name "sravan*"==>It will give all the folders starting with sravan in the linux system
+find ~ -type f -perm 755 -print==> to find files with 755 permission
+find ~ -mtime -30 ==>Find files modified in last 30 days
+find ~ -mtime +30 ==>Find files modified in before 30 days
+sed '3,5p' <file name> ==> to find lines from 3 to 5 in a file
+sed 'nd' <file name> ==> to delete a perticular lines
+sed 'd' <file name> ==> to delete the last line
+sed 'x,yd' <file name> ==> to delete range from x to y
+sed '/sravan/d' <file name> ==> to delete the line which having sravan word
+sed 's/unix/linux/' ==> to replace unix with linux
+zip sravan.zip sravan ==> to zip sravan file
+unzip sravan.zip ==> to unzip sravan.zip file
+ sudo rsync -aHAXxSP /new/ /staging/==> to copy data from src volume to target volume
+
+
+wc -l <file name> ==> to find how many lines and words in the file 
+cat /etc/group ==> to check all the users and groups present 
+vmstat==> it will give me how much memory,system,cpm and input output operation done
+iostat==> it will give the disk performance
